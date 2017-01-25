@@ -5,7 +5,6 @@
 #include <sstream>
 
 /*
-    TODO: Comment some more; the middle looks sparse.
     TODO: Have external store loader search for external stores on all drive letters or otherwise generalise the stores loading to not be drive specific.
     TODO: standardise variable naming system, make up your mind.
 */

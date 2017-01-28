@@ -132,7 +132,46 @@ void write_specificLocationLocalListStore(std::string vectorItemToBeStored, int 
     storageFile.close(); // Close file for neatness
 }
 
-void query(std::vector<std::string> thingsToDo) // The main query loop
+void query_add(std::vector<std::string>& thingsToDo, bool clear = flase, bool print = false) // Query loop offering options for adding items
+{
+    if (clear) // If clear == true, clear console
+    {
+        system("cls");
+    }
+    if (print) // If print == true, print list
+    {
+        printList(thingsToDo);
+    }
+    std::string input_Response; // Variable for storing the response of the user
+    // Print options
+    std::cout 
+            << "So you wish to add an item to the list, please choose an option:" << std::endl
+            << "[1]\t" << "Add item to the end of list" << std::endl
+            << "[2]\t" << "Add item to specific position" << std::endl
+            << "[X]\t" << "Back" << std::endl
+            << std::endl;
+    std::cin >> input_Response; // Store user resposne
+    if (input_Response == "1") // Add item to the end of the list
+    {
+        edit_addItemToList(thingsToDo);
+    }
+    else if (input_Response == "2") // Add item to specific line of the list
+    {
+        edit_addItemToPosition(thingsToDo);
+    }
+    else if (input_Response == "X" || input_Response == "x") // Go back to previous menu
+    {
+        return;
+    }
+    else // Invalid response given
+    {
+        std::cout << "Please enter a valid response" << std::endl;
+        query_add(thingsToDo, true, true);
+    }
+        
+}
+
+void query_master(std::vector<std::string> thingsToDo) // The main query loop
 {
     printList(thingsToDo); // Prints a given vector in the form: elementOne \n elementTwo \n ...
     std::string input_Response; // String used to hold result from user query for comparison and handeling
@@ -144,20 +183,19 @@ void query(std::vector<std::string> thingsToDo) // The main query loop
             << "[2]\t" << "Remove an item" << std::endl
             << "[3]\t" << "Import from USB" << std::endl
             << "[4]\t" << "Export to USB" << std::endl
-            << "[5]\t" << "Terminate Program" << std::endl
+            << "[X]\t" << "Terminate Program" << std::endl
             << std::endl;
-    terminationPosition = "5"; // Here set the termination postion to be that last option for ease later
     std::cin >> input_Response; // Take user input 
-    // Compare input to options; execute as appropriate then (in most cases) call query() again [NOTE: Consider switch statement]
+    // Compare input to options; execute as appropriate then (in most cases) call query_master() again [NOTE: Consider switch statement]
     if(input_Response == "1") // Add an item
     {
         edit_addItemToList(thingsToDo);
-        query(thingsToDo);
+        query_master(thingsToDo);
     }
     else if(input_Response == "2") // Remove an item
     {
         edit_removeItemFromList(thingsToDo);
-        query(thingsToDo);
+        query_master(thingsToDo);
     }
     else if (input_Response == "3") // Import from USB
     {
@@ -167,7 +205,7 @@ void query(std::vector<std::string> thingsToDo) // The main query loop
     {
         //Export and check for overwriting
     }
-    else if (input_Response == terminationPosition) // Termination requested
+    else if (input_Response == "X" || input_Response == "x") // Termination requested
     {
         terminateProgram();
     }
@@ -175,7 +213,7 @@ void query(std::vector<std::string> thingsToDo) // The main query loop
     {
         system("cls");
         std::cout << "Please enter a valid response" << std::endl << std::endl;
-        query(thingsToDo);
+        query_master(thingsToDo);
     }
 }
 
@@ -188,6 +226,6 @@ std::vector<std::string> initialLoad() // Initial Loading Procedure
 
 int main()
 {
-    query(initialLoad()); // Initialising the query response using initialLoad as the storage vector
+    query_master(initialLoad()); // Initialising the query response using initialLoad as the storage vector
     return 0;
 }

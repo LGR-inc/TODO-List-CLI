@@ -132,12 +132,8 @@ void write_specificLocationLocalListStore(std::string vectorItemToBeStored, int 
     storageFile.close(); // Close file for neatness
 }
 
-void query_add(std::vector<std::string>& thingsToDo, bool clear = flase, bool print = false) // Query loop offering options for adding items
+void query_add(std::vector<std::string>& thingsToDo, bool print = false) // Query loop offering options for adding items
 {
-    if (clear) // If clear == true, clear console
-    {
-        system("cls");
-    }
     if (print) // If print == true, print list
     {
         printList(thingsToDo);
@@ -165,8 +161,9 @@ void query_add(std::vector<std::string>& thingsToDo, bool clear = flase, bool pr
     }
     else // Invalid response given
     {
+        system("cls");
         std::cout << "Please enter a valid response" << std::endl;
-        query_add(thingsToDo, true, true);
+        query_add(thingsToDo, true);
     }
         
 }

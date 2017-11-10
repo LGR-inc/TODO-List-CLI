@@ -8,6 +8,19 @@
     TODO: Have external store loader search for external stores on all drive letters or otherwise generalise the stores loading to not be drive specific.
     TODO: standardise variable naming system, make up your mind.
 */
+/*
+    PS: Variables to be officially changed to camelCase.
+*/
+
+// Linux support is here! Yay!
+#ifdef __linux__
+  #include <unistd.h>
+#elif defined(_WIN32)
+  #include <windows.h>
+#endif
+
+#include "textcolour.h"
+TextColourManager cmdTextColour;
 
 void terminateProgram() // Called to terminate to pass comment on this event
 {

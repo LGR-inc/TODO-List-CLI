@@ -9,6 +9,9 @@
 
 class TextColourManager
 {
+// to use this class, declare a GLOBAL object of this class
+// Its methods can then be used anywhere in the program
+// Will automatically reset console colours when the program exits
 private:
     #ifdef _WIN32
         HANDLE hConsole; // for changing console text colours

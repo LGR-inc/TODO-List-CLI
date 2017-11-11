@@ -6,7 +6,7 @@
 
 /*
     TODO: Have external store loader search for external stores on all drive letters or otherwise generalise the stores loading to not be drive specific.
-    TODO: standardise variable naming system, make up your mind.
+    TODO: standardise variable naming system, make up your mind. [IN PROGRESS]
 */
 /*
     PS: Variables to be officially changed to camelCase.
@@ -67,7 +67,7 @@ void editRemoveItemFromList(std::vector<std::string>& vectorToBeEdited) // Remov
     if(!(convert >> itemToBeRemovedInt)) // Check if conversion can be made to int
     {
         // If not:
-        cleanScreen(); // Clear console; for clarity, avoids the console from getting cluttered
+        cmdTextColour.cleanScreen(); // Clear console; for clarity, avoids the console from getting cluttered
         printList(vectorToBeEdited); // Re-print the list
         std::cout << "Please enter a valid response" << std::endl; // Ask for a appropriate response
         editRemoveItemFromList(vectorToBeEdited); // Call parent function such that the check can be commited recursively untill this statement is not triggered
@@ -132,7 +132,7 @@ void writeOverwriteLocalListStore(std::vector<std::string> vectorToBeStored) // 
     storageFile.clear(); // Clear it (we are overwriting)
     for(unsigned int limit = 0 ; limit < vectorToBeStored.size() ; limit++) // Iterate up to the size of the vectorToBeStored
     {
-        storageFile << vectorItemToBeStored[limit] << "\n"; // Add the element to the file and the return, then loop to add next item...
+        storageFile << vectorToBeStored[limit] << "\n"; // Add the element to the file and the return, then loop to add next item...
     }
     storageFile.close(); // Close file for neatness
 }
@@ -166,7 +166,7 @@ void queryAdd(std::vector<std::string>& thingsToDo, bool print = false) // Query
     }
     else if (inputResponse == "2") // Add item to specific line of the list
     {
-        editAddItemToPosition(thingsToDo);
+        // editAddItemToPosition(thingsToDo); // Ansent Function; current closest is writeSpecificLocationLocalListStore
     }
     else if (inputResponse == "X" || inputResponse == "x") // Go back to previous menu
     {
@@ -174,7 +174,7 @@ void queryAdd(std::vector<std::string>& thingsToDo, bool print = false) // Query
     }
     else // Invalid response given
     {
-        cleanScreen();
+        cmdTextColour.cleanScreen();
         std::cout << "Please enter a valid response" << std::endl;
         queryAdd(thingsToDo, true);
     }
@@ -220,7 +220,7 @@ void queryMaster(std::vector<std::string> thingsToDo) // The main query loop
     }
     else // Invalid response given
     {
-        cleanScreen();
+        cmdTextColour.cleanScreen();
         std::cout << "Please enter a valid response" << std::endl << std::endl;
         queryMaster(thingsToDo);
     }

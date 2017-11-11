@@ -43,7 +43,7 @@ void printList(std::vector<std::string> listToPrint) // Takes a vector and print
     }
 }
 
-void edit_addItemToList(std::vector<std::string>& vectorToBeEdited) // Adds an item to the vector(TODO list) passed to it
+void editAddItemToList(std::vector<std::string>& vectorToBeEdited) // Adds an item to the vector (TODO list) passed to it
 {
     // Inquery for the item to be added
     std::cout
@@ -54,7 +54,7 @@ void edit_addItemToList(std::vector<std::string>& vectorToBeEdited) // Adds an i
     vectorToBeEdited.push_back(itemToBeAdded); // Add the item to the end of the list
 }
 
-void edit_removeItemFromList(std::vector<std::string>& vectorToBeEdited) // Removes a item from the vector(TODO list) passed to it
+void editRemoveItemFromList(std::vector<std::string>& vectorToBeEdited) // Removes a item from the vector (TODO list) passed to it
 {
     // Inquery for the item to be removed
     std::cout
@@ -67,15 +67,15 @@ void edit_removeItemFromList(std::vector<std::string>& vectorToBeEdited) // Remo
     if(!(convert >> itemToBeRemovedInt)) // Check if conversion can be made to int
     {
         // If not:
-        system("cls"); // Clear console; for clarity, avoids the console from getting cluttered
+        cleanScreen(); // Clear console; for clarity, avoids the console from getting cluttered
         printList(vectorToBeEdited); // Re-print the list
         std::cout << "Please enter a valid response" << std::endl; // Ask for a appropriate response
-        edit_removeItemFromList(vectorToBeEdited); // Call parent function such that the check can be commited recursively untill this statement is not triggered
+        editRemoveItemFromList(vectorToBeEdited); // Call parent function such that the check can be commited recursively untill this statement is not triggered
     }
     vectorToBeEdited.erase(vectorToBeEdited.begin() + (itemToBeRemovedInt - 1)); // If conversion is done successfully, erase the item of the appropriate position; using the appropriate shifts
 }
 
-void read_loadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorToBeLoaded, std::string pathToStore) // Assign values to vectorToBeLoaded based on a text document at the pathToStore 
+void readLoadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorToBeLoaded, std::string pathToStore) // Assign values to vectorToBeLoaded based on a text document at the pathToStore 
 { // [IN PROGRESS: PRESENTLY A MESS; MUCH WORK TO DO]
     std::string path;
     if(pathToStore[pathToStore.size()-1] != '\\')
@@ -92,7 +92,7 @@ void read_loadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorTo
     }
 }
 
-void read_loadVectorFromStore(std::vector<std::string>& vectorToBeLoaded) // Assign values to vectorToBeLoaded from a store [PLACEHOLDER FUNCTION; not intend for use in final distribution, works for now, no where near what I would like but it lets the program run]
+void readLoadVectorFromStore(std::vector<std::string>& vectorToBeLoaded) // Assign values to vectorToBeLoaded from a store [PLACEHOLDER FUNCTION; not intend for use in final distribution, works for now, no where near what I would like but it lets the program run]
 {
     std::ifstream storageFile("G:\\thingsToDo_ExternalStore.txt"); // Open an input stream to the file at this location
     if(!storageFile) // If that can't be done (i.e. it isn't there)
@@ -119,14 +119,14 @@ void read_loadVectorFromStore(std::vector<std::string>& vectorToBeLoaded) // Ass
     storageFile.close(); // Close the variable for neatness
 }
 
-void write_addToLocalListStore(std::string vectorItemToBeStored) // Adds an item to the local storage file [Note: Is this obsolete now?]
+void writeAddToLocalListStore(std::string vectorItemToBeStored) // Adds an item to the local storage file [Note: Is this obsolete now?]
 {
     std::ofstream storageFile("thingsToDo.txt"); // Open an output stream to the file at this location (program directory)
     storageFile << vectorItemToBeStored << "\n"; // Add the item followed by a carriage return
     storageFile.close(); // Close the file for neatness
 }
 
-void write_overwriteLocalListStore(std::vector<std::string> vectorToBeStored) // Overwrite the local store with the vectorToBeStored
+void writeOverwriteLocalListStore(std::vector<std::string> vectorToBeStored) // Overwrite the local store with the vectorToBeStored
 {
     std::ofstream storageFile("thingsToDo.txt"); // Open an output stream to the file at this location
     storageFile.clear(); // Clear it (we are overwriting)
@@ -137,7 +137,7 @@ void write_overwriteLocalListStore(std::vector<std::string> vectorToBeStored) //
     storageFile.close(); // Close file for neatness
 }
 
-void write_specificLocationLocalListStore(std::string vectorItemToBeStored, int lineNumber) // Write a new item(vectorItemToBeStored) to a specific location in the file(lineNumber) [WORK IN PROGRESS; unsure if it works, been a while since I thought about this bit]
+void writeSpecificLocationLocalListStore(std::string vectorItemToBeStored, int lineNumber) // Write a new item(vectorItemToBeStored) to a specific location in the file(lineNumber) [WORK IN PROGRESS; unsure if it works, been a while since I thought about this bit]
 {
     std::ofstream storageFile("thingsToDo.txt"); // Open output stream to the file at this location
     storageFile.seekp(lineNumber); // Seek the line given by the lineNumber; set 'cursor' location to the begining of that line
@@ -145,13 +145,13 @@ void write_specificLocationLocalListStore(std::string vectorItemToBeStored, int 
     storageFile.close(); // Close file for neatness
 }
 
-void query_add(std::vector<std::string>& thingsToDo, bool print = false) // Query loop offering options for adding items
+void queryAdd(std::vector<std::string>& thingsToDo, bool print = false) // Query loop offering options for adding items
 {
     if (print) // If print == true, print list
     {
         printList(thingsToDo);
     }
-    std::string input_Response; // Variable for storing the response of the user
+    std::string inputResponse; // Variable for storing the response of the user
     // Print options
     std::cout 
             << "So you wish to add an item to the list, please choose an option:" << std::endl
@@ -159,33 +159,32 @@ void query_add(std::vector<std::string>& thingsToDo, bool print = false) // Quer
             << "[2]\t" << "Add item to specific position" << std::endl
             << "[X]\t" << "Back" << std::endl
             << std::endl;
-    std::cin >> input_Response; // Store user resposne
-    if (input_Response == "1") // Add item to the end of the list
+    std::cin >> inputResponse; // Store user resposne
+    if (inputResponse == "1") // Add item to the end of the list
     {
-        edit_addItemToList(thingsToDo);
+        editAddItemToList(thingsToDo);
     }
-    else if (input_Response == "2") // Add item to specific line of the list
+    else if (inputResponse == "2") // Add item to specific line of the list
     {
-        edit_addItemToPosition(thingsToDo);
+        editAddItemToPosition(thingsToDo);
     }
-    else if (input_Response == "X" || input_Response == "x") // Go back to previous menu
+    else if (inputResponse == "X" || inputResponse == "x") // Go back to previous menu
     {
         return;
     }
     else // Invalid response given
     {
-        system("cls");
+        cleanScreen();
         std::cout << "Please enter a valid response" << std::endl;
-        query_add(thingsToDo, true);
+        queryAdd(thingsToDo, true);
     }
         
 }
 
-void query_master(std::vector<std::string> thingsToDo) // The main query loop
+void queryMaster(std::vector<std::string> thingsToDo) // The main query loop
 {
     printList(thingsToDo); // Prints a given vector in the form: elementOne \n elementTwo \n ...
-    std::string input_Response; // String used to hold result from user query for comparison and handeling
-    std::string terminationPosition = "Null"; // Simply set to be not equal to the input_Response by default such that I may extend the below list and not have to alter the final if loop
+    std::string inputResponse; // String used to hold result from user query for comparison and handeling
     // Printing options
     std::cout
             << std::endl
@@ -195,47 +194,47 @@ void query_master(std::vector<std::string> thingsToDo) // The main query loop
             << "[4]\t" << "Export to USB" << std::endl
             << "[X]\t" << "Terminate Program" << std::endl
             << std::endl;
-    std::cin >> input_Response; // Take user input 
-    // Compare input to options; execute as appropriate then (in most cases) call query_master() again [NOTE: Consider switch statement]
-    if(input_Response == "1") // Add an item
+    std::cin >> inputResponse; // Take user input 
+    // Compare input to options; execute as appropriate then (in most cases) call queryMaster() again [NOTE: Consider switch statement]
+    if(inputResponse == "1") // Add an item
     {
-        edit_addItemToList(thingsToDo);
-        query_master(thingsToDo);
+        editAddItemToList(thingsToDo);
+        queryMaster(thingsToDo);
     }
-    else if(input_Response == "2") // Remove an item
+    else if(inputResponse == "2") // Remove an item
     {
-        edit_removeItemFromList(thingsToDo);
-        query_master(thingsToDo);
+        editRemoveItemFromList(thingsToDo);
+        queryMaster(thingsToDo);
     }
-    else if (input_Response == "3") // Import from USB
+    else if (inputResponse == "3") // Import from USB
     {
         //Import; show imported list and ask if local copy should be overwritten of to edit the external file
     }
-    else if (input_Response == "4") // Export to USB
+    else if (inputResponse == "4") // Export to USB
     {
         //Export and check for overwriting
     }
-    else if (input_Response == "X" || input_Response == "x") // Termination requested
+    else if (inputResponse == "X" || inputResponse == "x") // Termination requested
     {
         terminateProgram();
     }
     else // Invalid response given
     {
-        system("cls");
+        cleanScreen();
         std::cout << "Please enter a valid response" << std::endl << std::endl;
-        query_master(thingsToDo);
+        queryMaster(thingsToDo);
     }
 }
 
 std::vector<std::string> initialLoad() // Initial Loading Procedure
 {
     std::vector<std::string> thingsToDo; // Place holder vector storing the TODO list presently being used
-    read_loadVectorFromStore(thingsToDo); // Assigning available store to vector (store is either thingsToDo.txt or thingsToDO_ExternalStore.txt if the stor is ona  aremovable disk)
+    readLoadVectorFromStore(thingsToDo); // Assigning available store to vector (store is either thingsToDo.txt or thingsToDO_ExternalStore.txt if the stor is ona  aremovable disk)
     return thingsToDo;
 }
 
 int main()
 {
-    query_master(initialLoad()); // Initialising the query response using initialLoad as the storage vector
+    queryMaster(initialLoad()); // Initialising the query response using initialLoad as the storage vector
     return 0;
 }

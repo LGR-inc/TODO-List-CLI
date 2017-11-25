@@ -22,8 +22,10 @@
 #include "textcolour.h"
 TextColourManager cmdTextColour;
 
-void terminateProgram() // Called to terminate to pass comment on this event
+void terminateProgram()
 {
+    // Called to terminate and to pass comment on this event
+    
     std::cout 
         << std::endl 
         << "So you have decided to terminate the program." 
@@ -35,16 +37,20 @@ void terminateProgram() // Called to terminate to pass comment on this event
     std::system("exit");
 }
 
-void printList(std::vector<std::string> listToPrint) // Takes a vector and prints its elements (Fairly self-explanatory)
+void printList(std::vector<std::string> listToPrint)
 {
+    // Takes a vector and prints its elements in the desired format (Fairly self-explanatory)
+    
     for(unsigned int k = 1; k < listToPrint.size(); k++) // Iterates k from 1 to the size of the list
     {
         std::cout << "[" << k << "]\t" << listToPrint[k-1] << std::endl; // Numbers the element (k) then prints the appropriate item in the list.
     }
 }
 
-void editAddItemToList(std::vector<std::string>& vectorToBeEdited) // Adds an item to the vector (TODO list) passed to it
+void editAddItemToList(std::vector<std::string>& vectorToBeEdited)
 {
+    // Adds an item to the vector (TODO list) passed to it
+    
     // Inquery for the item to be added
     std::cout
             << "So you want to add an item to do; ok, what is it?" << std::endl
@@ -54,8 +60,10 @@ void editAddItemToList(std::vector<std::string>& vectorToBeEdited) // Adds an it
     vectorToBeEdited.push_back(itemToBeAdded); // Add the item to the end of the list
 }
 
-void editRemoveItemFromList(std::vector<std::string>& vectorToBeEdited) // Removes a item from the vector (TODO list) passed to it
+void editRemoveItemFromList(std::vector<std::string>& vectorToBeEdited)
 {
+    // Removes a item from the vector (TODO list) passed to it
+    
     // Inquery for the item to be removed
     std::cout
             << "So you wish to remove an item from the list?" << std::endl
@@ -75,8 +83,10 @@ void editRemoveItemFromList(std::vector<std::string>& vectorToBeEdited) // Remov
     vectorToBeEdited.erase(vectorToBeEdited.begin() + (itemToBeRemovedInt - 1)); // If conversion is done successfully, erase the item of the appropriate position; using the appropriate shifts
 }
 
-void readLoadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorToBeLoaded, std::string pathToStore) // Assign values to vectorToBeLoaded based on a text document at the pathToStore 
+void readLoadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorToBeLoaded, std::string pathToStore)
 { // [IN PROGRESS: PRESENTLY A MESS; MUCH WORK TO DO]
+    // Assign values to vectorToBeLoaded based on a text document at the pathToStore
+    
     std::string path;
     if(pathToStore[pathToStore.size()-1] != '\\')
     {
@@ -92,8 +102,12 @@ void readLoadVectorFromExternalStoreOnDemand(std::vector<std::string>& vectorToB
     }
 }
 
-void readLoadVectorFromStore(std::vector<std::string>& vectorToBeLoaded) // Assign values to vectorToBeLoaded from a store [PLACEHOLDER FUNCTION; not intend for use in final distribution, works for now, no where near what I would like but it lets the program run]
+void readLoadVectorFromStore(std::vector<std::string>& vectorToBeLoaded)
 {
+    // Assign values to vectorToBeLoaded from a store [PLACEHOLDER FUNCTION; 
+    // not intend for use in final distribution, works for now, 
+    // no where near what I would like but it lets the program run]
+    
     std::ifstream storageFile("G:\\thingsToDo_ExternalStore.txt"); // Open an input stream to the file at this location
     if(!storageFile) // If that can't be done (i.e. it isn't there)
     {
@@ -119,15 +133,19 @@ void readLoadVectorFromStore(std::vector<std::string>& vectorToBeLoaded) // Assi
     storageFile.close(); // Close the variable for neatness
 }
 
-void writeAddToLocalListStore(std::string vectorItemToBeStored) // Adds an item to the local storage file [Note: Is this obsolete now?]
+void writeAddToLocalListStore(std::string vectorItemToBeStored)
 {
+    // Adds an item to the local storage file [Note: Is this obsolete now?]
+    
     std::ofstream storageFile("thingsToDo.txt"); // Open an output stream to the file at this location (program directory)
     storageFile << vectorItemToBeStored << "\n"; // Add the item followed by a carriage return
     storageFile.close(); // Close the file for neatness
 }
 
-void writeOverwriteLocalListStore(std::vector<std::string> vectorToBeStored) // Overwrite the local store with the vectorToBeStored
+void writeOverwriteLocalListStore(std::vector<std::string> vectorToBeStored)
 {
+    // Overwrite the local store with the vectorToBeStored
+    
     std::ofstream storageFile("thingsToDo.txt"); // Open an output stream to the file at this location
     storageFile.clear(); // Clear it (we are overwriting)
     for(unsigned int limit = 0 ; limit < vectorToBeStored.size() ; limit++) // Iterate up to the size of the vectorToBeStored
@@ -137,16 +155,23 @@ void writeOverwriteLocalListStore(std::vector<std::string> vectorToBeStored) // 
     storageFile.close(); // Close file for neatness
 }
 
-void writeSpecificLocationLocalListStore(std::string vectorItemToBeStored, int lineNumber) // Write a new item(vectorItemToBeStored) to a specific location in the file(lineNumber) [WORK IN PROGRESS; unsure if it works, been a while since I thought about this bit]
+void writeSpecificLocationLocalListStore(std::string vectorItemToBeStored, int lineNumber)
 {
+    // Write a new item(vectorItemToBeStored) 
+    // to a specific location in the file(lineNumber)
+    // [WORK IN PROGRESS; unsure if it works,
+    // been a while since I thought about this bit]
+    
     std::ofstream storageFile("thingsToDo.txt"); // Open output stream to the file at this location
     storageFile.seekp(lineNumber); // Seek the line given by the lineNumber; set 'cursor' location to the begining of that line
     storageFile << vectorItemToBeStored << "\n"; // Add new item, followed by a return
     storageFile.close(); // Close file for neatness
 }
 
-void queryAdd(std::vector<std::string>& thingsToDo, bool print = false) // Query loop offering options for adding items
+void queryAdd(std::vector<std::string>& thingsToDo, bool print = false)
 {
+    // Query loop offering options for adding items
+    
     if (print) // If print == true, print list
     {
         printList(thingsToDo);
@@ -181,8 +206,10 @@ void queryAdd(std::vector<std::string>& thingsToDo, bool print = false) // Query
         
 }
 
-void queryMaster(std::vector<std::string> thingsToDo) // The main query loop
+void queryMaster(std::vector<std::string> thingsToDo)
 {
+    // The main query loop
+    
     printList(thingsToDo); // Prints a given vector in the form: elementOne \n elementTwo \n ...
     std::string inputResponse; // String used to hold result from user query for comparison and handeling
     // Printing options
@@ -226,8 +253,10 @@ void queryMaster(std::vector<std::string> thingsToDo) // The main query loop
     }
 }
 
-std::vector<std::string> initialLoad() // Initial Loading Procedure
+std::vector<std::string> initialLoad()
 {
+    // Initial Loading Procedure
+    
     std::vector<std::string> thingsToDo; // Place holder vector storing the TODO list presently being used
     readLoadVectorFromStore(thingsToDo); // Assigning available store to vector (store is either thingsToDo.txt or thingsToDO_ExternalStore.txt if the stor is ona  aremovable disk)
     return thingsToDo;

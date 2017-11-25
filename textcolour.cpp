@@ -178,6 +178,16 @@ void TextColourManager::cleanScreen()
     #endif
 }
 
+void TextColourManager::pause()
+{
+    // Pauses the program in a cross-platform way
+    #ifdef __linux__
+        system("sleep 3");
+    #elif defined(_WIN32)
+        system("timeout /t 3");
+    #endif
+}
+
 void TextColourManager::setTextColour(std::string colour)
 {
     /*

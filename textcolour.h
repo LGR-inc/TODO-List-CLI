@@ -28,6 +28,8 @@ public:
     // clears the screen of text
     void cleanScreen ();
     // set the colour of text
+    void pause();
+    // Pause the console
     // COLOURS: red, green, blue, magenta, yellow, cyan, black, white
     void setTextColour ( std::string colour );
     // set the colour of the text background

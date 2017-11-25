@@ -33,8 +33,8 @@ void terminateProgram()
         << "Fair enough; go procrastinate, or find something to do and come back." 
         << std::endl 
         << std::endl;
-    std::system("timeout /t 5");
-    std::system("exit");
+    cmdTextColour.pause(); // Cross platform pause
+    std::system("exit"); // Terminate
 }
 
 void printList(std::vector<std::string> listToPrint)
